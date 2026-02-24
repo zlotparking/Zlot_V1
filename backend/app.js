@@ -18,6 +18,20 @@ const envOrigins = (process.env.FRONTEND_ORIGIN || "")
   .filter(Boolean);
 const allowedOrigins = envOrigins.length > 0 ? envOrigins : defaultOrigins;
 
+function isTrustedVercelFrontend(origin) {
+  try {
+    const parsed = new URL(origin);
+    if (parsed.protocol !== "https:") {
+      return false;
+    }
+
+    const hostname = parsed.hostname.toLowerCase();
+    return hostname.endsWith(".vercel.app") && hostname.includes("zlot");
+  } catch {
+    return false;
+  }
+}
+
 function isLocalNetworkFrontend(origin) {
   try {
     const parsed = new URL(origin);
@@ -48,6 +62,7 @@ app.use(
       if (
         !origin ||
         allowedOrigins.includes(origin) ||
+        isTrustedVercelFrontend(origin) ||
         isLocalNetworkFrontend(origin)
       ) {
         callback(null, true);
@@ -85,4 +100,3 @@ export function getAllowedOrigins() {
 }
 
 export default app;
-
