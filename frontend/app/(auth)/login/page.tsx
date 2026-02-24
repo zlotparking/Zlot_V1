@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { type FormEvent, useCallback, useEffect, useState } from "react";
+import { Suspense, type FormEvent, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,7 +29,7 @@ const HERO_IMAGE =
 const HERO_FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1704269720184-8025fd29dc28?auto=format&fit=crop&w=1600&q=80";
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const intent = searchParams.get("intent");
@@ -290,6 +290,22 @@ export default function LoginPage() {
         </section>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
+          <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
+            Loading login...
+          </p>
+        </div>
+      }
+    >
+      <LoginPageContent />
+    </Suspense>
   );
 }
 

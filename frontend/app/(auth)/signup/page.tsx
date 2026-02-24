@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { type FormEvent, useState } from "react";
+import { Suspense, type FormEvent, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -40,7 +40,7 @@ const benefits = [
   "Manage everything from one dashboard.",
 ];
 
-export default function SignupPage() {
+function SignupPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const intent = searchParams.get("intent");
@@ -305,6 +305,22 @@ export default function SignupPage() {
         </section>
       </div>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
+          <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
+            Loading signup...
+          </p>
+        </div>
+      }
+    >
+      <SignupPageContent />
+    </Suspense>
   );
 }
 
