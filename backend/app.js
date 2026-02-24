@@ -17,6 +17,19 @@ const envOrigins = (process.env.FRONTEND_ORIGIN || "")
   .map((origin) => origin.trim())
   .filter(Boolean);
 const allowedOrigins = envOrigins.length > 0 ? envOrigins : defaultOrigins;
+const productionOrigins = [
+  "https://zlot-v1front.vercel.app",
+  "https://www.zlot.co.in",
+  "https://zlot.co.in",
+];
+
+function normalizeOrigin(origin) {
+  return origin.replace(/\/+$/, "");
+}
+
+const normalizedAllowedOrigins = [...new Set([...allowedOrigins, ...productionOrigins])].map(
+  normalizeOrigin
+);
 
 function isTrustedVercelFrontend(origin) {
   try {
@@ -59,11 +72,12 @@ const app = express();
 app.use(
   cors({
     origin: (origin, callback) => {
+      const normalizedOrigin = typeof origin === "string" ? normalizeOrigin(origin) : origin;
       if (
-        !origin ||
-        allowedOrigins.includes(origin) ||
-        isTrustedVercelFrontend(origin) ||
-        isLocalNetworkFrontend(origin)
+        !normalizedOrigin ||
+        normalizedAllowedOrigins.includes(normalizedOrigin) ||
+        isTrustedVercelFrontend(normalizedOrigin) ||
+        isLocalNetworkFrontend(normalizedOrigin)
       ) {
         callback(null, true);
         return;
@@ -96,7 +110,7 @@ app.use((error, _req, res, next) => {
 });
 
 export function getAllowedOrigins() {
-  return [...allowedOrigins];
+  return [...normalizedAllowedOrigins];
 }
 
 export default app;
