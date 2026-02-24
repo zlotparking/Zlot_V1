@@ -64,6 +64,20 @@ function formatDateTime(value: string): string {
   });
 }
 
+async function fileToBase64(file: File): Promise<string> {
+  const buffer = await file.arrayBuffer();
+  let binary = "";
+  const bytes = new Uint8Array(buffer);
+  const chunkSize = 0x8000;
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize);
+    binary += String.fromCharCode(...chunk);
+  }
+
+  return btoa(binary);
+}
+
 export default function OwnerDashboardClient() {
   const [storageKey, setStorageKey] = useState(OWNER_SUBMISSION_STORAGE_KEY);
   const [ready, setReady] = useState(false);
@@ -260,6 +274,20 @@ export default function OwnerDashboardClient() {
 
       const imageNames = imageFiles.map((file) => file.name);
       const videoName = videoFile?.name ?? null;
+      const imagePayload = await Promise.all(
+        imageFiles.map(async (file) => ({
+          name: file.name,
+          content_type: file.type || "application/octet-stream",
+          data_base64: await fileToBase64(file),
+        }))
+      );
+      const videoPayload = videoFile
+        ? {
+            name: videoFile.name,
+            content_type: videoFile.type || "application/octet-stream",
+            data_base64: await fileToBase64(videoFile),
+          }
+        : null;
 
       await submitOwnerSubmission(authToken, {
         owner_name: ownerName,
@@ -273,6 +301,8 @@ export default function OwnerDashboardClient() {
         notes: form.notes.trim(),
         image_names: imageNames,
         video_name: videoName,
+        images_base64: imagePayload,
+        video_base64: videoPayload,
       });
 
       const nextSubmission: OwnerSubmission = {

@@ -161,6 +161,16 @@ export type OwnerSubmissionPayload = {
   notes?: string;
   image_names: string[];
   video_name?: string | null;
+  images_base64?: Array<{
+    name: string;
+    content_type: string;
+    data_base64: string;
+  }>;
+  video_base64?: {
+    name: string;
+    content_type: string;
+    data_base64: string;
+  } | null;
 };
 
 export function getApiBaseUrl(): string {
