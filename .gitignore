@@ -6,3 +6,4 @@ frontend/.env.local
 frontend/.next
 backend/.vercel
 frontend/.vercel
+frontend/.git_backup/
