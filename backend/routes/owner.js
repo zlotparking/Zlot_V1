@@ -60,6 +60,35 @@ function normalizeBase64Files(input, maxItems) {
     .filter(Boolean);
 }
 
+function normalizeMediaLinks(input, maxItems) {
+  if (!Array.isArray(input)) {
+    return [];
+  }
+
+  return input
+    .slice(0, maxItems)
+    .map((item) => {
+      if (!item || typeof item !== "object") {
+        return null;
+      }
+
+      const name = normalizeText(item.name, 180);
+      const url = normalizeText(item.url, 2000);
+
+      if (!name || !url || !/^https?:\/\//i.test(url)) {
+        return null;
+      }
+
+      return { name, url };
+    })
+    .filter(Boolean);
+}
+
+function normalizeSingleMediaLink(input) {
+  const normalized = normalizeMediaLinks([input], 1);
+  return normalized[0] || null;
+}
+
 function escapeHtml(value) {
   return value
     .replace(/&/g, "&amp;")
@@ -298,6 +327,8 @@ router.post("/submission", async (req, res) => {
 
     const image_names = normalizeFileNames(req.body?.image_names, MAX_IMAGES);
     const video_name = normalizeText(req.body?.video_name, 180) || null;
+    const image_links = normalizeMediaLinks(req.body?.image_links, MAX_IMAGES);
+    const video_link = normalizeSingleMediaLink(req.body?.video_link);
 
     const images_base64 = normalizeBase64Files(req.body?.images_base64, MAX_IMAGES);
     const rawVideoBase64 = req.body?.video_base64;
@@ -318,15 +349,19 @@ router.post("/submission", async (req, res) => {
       });
     }
 
-    if (image_names.length === 0 && images_base64.length === 0) {
+    if (
+      image_names.length === 0 &&
+      images_base64.length === 0 &&
+      image_links.length === 0
+    ) {
       return res.status(400).json({
         error:
-          "Provide at least one image. Use image_names (legacy) or images_base64 (with data).",
+          "Provide at least one image. Use image_links, image_names, or images_base64.",
       });
     }
 
-    let imageLinks = [];
-    let videoLink = null;
+    let imageLinks = [...image_links];
+    let videoLink = video_link;
 
     if (images_base64.length > 0 || video_base64) {
       const uploaded = await uploadMediaFiles({
@@ -334,13 +369,21 @@ router.post("/submission", async (req, res) => {
         images: images_base64,
         video: video_base64,
       });
-      imageLinks = uploaded.imageLinks;
-      videoLink = uploaded.videoLink;
+      if (uploaded.imageLinks.length > 0) {
+        imageLinks = uploaded.imageLinks;
+      }
+      if (uploaded.videoLink) {
+        videoLink = uploaded.videoLink;
+      }
     }
 
-    const resolvedImageNames =
-      images_base64.length > 0 ? images_base64.map((item) => item.name) : image_names;
-    const resolvedVideoName = video_base64?.name || video_name;
+    let resolvedImageNames = image_names;
+    if (images_base64.length > 0) {
+      resolvedImageNames = images_base64.map((item) => item.name);
+    } else if (image_links.length > 0) {
+      resolvedImageNames = image_links.map((item) => item.name);
+    }
+    const resolvedVideoName = video_base64?.name || video_link?.name || video_name;
 
     const normalizedPayload = {
       owner_name,

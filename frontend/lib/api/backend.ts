@@ -161,6 +161,14 @@ export type OwnerSubmissionPayload = {
   notes?: string;
   image_names: string[];
   video_name?: string | null;
+  image_links?: Array<{
+    name: string;
+    url: string;
+  }>;
+  video_link?: {
+    name: string;
+    url: string;
+  } | null;
   images_base64?: Array<{
     name: string;
     content_type: string;

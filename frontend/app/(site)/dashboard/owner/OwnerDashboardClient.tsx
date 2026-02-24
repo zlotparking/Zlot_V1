@@ -49,6 +49,11 @@ const EMPTY_FORM: SubmissionForm = {
   notes: "",
 };
 
+const OWNER_MEDIA_BUCKET =
+  process.env.NEXT_PUBLIC_OWNER_MEDIA_BUCKET?.trim() || "owner-submissions";
+const MAX_IMAGE_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_VIDEO_FILE_SIZE = 12 * 1024 * 1024;
+
 function formatDateTime(value: string): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
@@ -64,18 +69,77 @@ function formatDateTime(value: string): string {
   });
 }
 
-async function fileToBase64(file: File): Promise<string> {
-  const buffer = await file.arrayBuffer();
-  let binary = "";
-  const bytes = new Uint8Array(buffer);
-  const chunkSize = 0x8000;
+function sanitizeFileName(fileName: string): string {
+  const sanitized = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
+  return sanitized || "upload.bin";
+}
 
-  for (let i = 0; i < bytes.length; i += chunkSize) {
-    const chunk = bytes.subarray(i, i + chunkSize);
-    binary += String.fromCharCode(...chunk);
+async function uploadOwnerMediaToStorage({
+  supabase,
+  userId,
+  images,
+  video,
+}: {
+  supabase: ReturnType<typeof getSupabaseBrowserClient>;
+  userId: string;
+  images: File[];
+  video: File | null;
+}) {
+  const submissionRef = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
+  const imageLinks: Array<{ name: string; url: string }> = [];
+  let videoLink: { name: string; url: string } | null = null;
+
+  for (const [index, image] of images.entries()) {
+    if (image.size > MAX_IMAGE_FILE_SIZE) {
+      throw new Error(
+        `${image.name} is larger than 5 MB. Compress image and retry.`
+      );
+    }
+
+    const filePath = `${userId}/${submissionRef}/images/${index + 1}-${sanitizeFileName(
+      image.name
+    )}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from(OWNER_MEDIA_BUCKET)
+      .upload(filePath, image, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: image.type || "application/octet-stream",
+      });
+
+    if (uploadError) {
+      throw new Error(uploadError.message || `Failed to upload ${image.name}.`);
+    }
+
+    const { data } = supabase.storage.from(OWNER_MEDIA_BUCKET).getPublicUrl(filePath);
+    imageLinks.push({ name: image.name, url: data.publicUrl });
   }
 
-  return btoa(binary);
+  if (video) {
+    if (video.size > MAX_VIDEO_FILE_SIZE) {
+      throw new Error("Video is larger than 12 MB. Use a smaller clip.");
+    }
+
+    const videoPath = `${userId}/${submissionRef}/video/${sanitizeFileName(video.name)}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from(OWNER_MEDIA_BUCKET)
+      .upload(videoPath, video, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: video.type || "application/octet-stream",
+      });
+
+    if (uploadError) {
+      throw new Error(uploadError.message || `Failed to upload ${video.name}.`);
+    }
+
+    const { data } = supabase.storage.from(OWNER_MEDIA_BUCKET).getPublicUrl(videoPath);
+    videoLink = { name: video.name, url: data.publicUrl };
+  }
+
+  return { imageLinks, videoLink };
 }
 
 export default function OwnerDashboardClient() {
@@ -266,28 +330,22 @@ export default function OwnerDashboardClient() {
         error: sessionError,
       } = await supabase.auth.getSession();
       const authToken = session?.access_token;
+      const authUserId = session?.user?.id;
 
-      if (sessionError || !authToken) {
+      if (sessionError || !authToken || !authUserId) {
         setError("Your login session expired. Please login again.");
         return;
       }
 
       const imageNames = imageFiles.map((file) => file.name);
       const videoName = videoFile?.name ?? null;
-      const imagePayload = await Promise.all(
-        imageFiles.map(async (file) => ({
-          name: file.name,
-          content_type: file.type || "application/octet-stream",
-          data_base64: await fileToBase64(file),
-        }))
-      );
-      const videoPayload = videoFile
-        ? {
-            name: videoFile.name,
-            content_type: videoFile.type || "application/octet-stream",
-            data_base64: await fileToBase64(videoFile),
-          }
-        : null;
+
+      const uploadedMedia = await uploadOwnerMediaToStorage({
+        supabase,
+        userId: authUserId,
+        images: imageFiles,
+        video: videoFile,
+      });
 
       await submitOwnerSubmission(authToken, {
         owner_name: ownerName,
@@ -301,8 +359,8 @@ export default function OwnerDashboardClient() {
         notes: form.notes.trim(),
         image_names: imageNames,
         video_name: videoName,
-        images_base64: imagePayload,
-        video_base64: videoPayload,
+        image_links: uploadedMedia.imageLinks,
+        video_link: uploadedMedia.videoLink,
       });
 
       const nextSubmission: OwnerSubmission = {
