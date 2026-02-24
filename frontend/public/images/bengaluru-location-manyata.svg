@@ -1,0 +1,23 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mbg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1B2559" />
+      <stop offset="1" stop-color="#2C3EA9" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#mbg)" />
+  <circle cx="178" cy="128" r="82" fill="#A78BFA" fill-opacity="0.24" />
+  <circle cx="1032" cy="630" r="118" fill="#60A5FA" fill-opacity="0.18" />
+  <rect x="82" y="94" width="1036" height="572" rx="28" fill="#1A1F4F" stroke="#475569" stroke-width="2" />
+  <rect x="130" y="142" width="940" height="476" rx="20" fill="#111827" />
+  <path d="M130 618L414 360H786L1070 618H130Z" fill="#0B1220" />
+  <line x1="184" y1="254" x2="1016" y2="254" stroke="#A78BFA" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="384" x2="1016" y2="384" stroke="#A78BFA" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="514" x2="1016" y2="514" stroke="#A78BFA" stroke-width="10" stroke-dasharray="28 20" />
+  <rect x="322" y="452" width="168" height="56" rx="12" fill="#8B5CF6" fill-opacity="0.87" />
+  <circle cx="358" cy="514" r="13" fill="#0F172A" />
+  <circle cx="454" cy="514" r="13" fill="#0F172A" />
+  <rect x="158" y="54" width="282" height="52" rx="12" fill="#0F172A" stroke="#475569" />
+  <text x="190" y="86" fill="#F8FAFC" font-size="22" font-family="Arial, sans-serif" font-weight="700">Manyata Tech Park</text>
+  <text x="158" y="650" fill="#C4B5FD" font-size="18" font-family="Arial, sans-serif" font-weight="700">OUTER RING ROAD · ZLOT NODE</text>
+</svg>

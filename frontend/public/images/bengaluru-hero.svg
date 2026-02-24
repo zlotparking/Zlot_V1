@@ -1,0 +1,58 @@
+<svg width="1600" height="2000" viewBox="0 0 1600 2000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="800" y1="0" x2="800" y2="2000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#020617" />
+      <stop offset="0.45" stop-color="#0B132B" />
+      <stop offset="1" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="road" x1="800" y1="760" x2="800" y2="2000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A" />
+      <stop offset="1" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="trailL" x1="640" y1="930" x2="725" y2="1920" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F97316" stop-opacity="0.9" />
+      <stop offset="1" stop-color="#FB7185" stop-opacity="0.15" />
+    </linearGradient>
+    <linearGradient id="trailR" x1="930" y1="930" x2="840" y2="1920" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FDE047" stop-opacity="0.9" />
+      <stop offset="1" stop-color="#FACC15" stop-opacity="0.12" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="2000" fill="url(#bg)" />
+
+  <circle cx="220" cy="210" r="150" fill="#F59E0B" fill-opacity="0.2" />
+  <circle cx="1380" cy="360" r="190" fill="#60A5FA" fill-opacity="0.15" />
+  <circle cx="1220" cy="1550" r="240" fill="#F59E0B" fill-opacity="0.12" />
+
+  <rect x="120" y="300" width="250" height="620" rx="24" fill="#1E293B" fill-opacity="0.9" />
+  <rect x="410" y="220" width="220" height="700" rx="24" fill="#334155" fill-opacity="0.85" />
+  <rect x="680" y="340" width="280" height="590" rx="24" fill="#1E293B" fill-opacity="0.85" />
+  <rect x="1000" y="260" width="210" height="670" rx="24" fill="#334155" fill-opacity="0.82" />
+  <rect x="1240" y="330" width="220" height="600" rx="24" fill="#1E293B" fill-opacity="0.88" />
+
+  <g fill="#94A3B8" fill-opacity="0.5">
+    <rect x="170" y="370" width="24" height="24" rx="4" />
+    <rect x="220" y="370" width="24" height="24" rx="4" />
+    <rect x="170" y="430" width="24" height="24" rx="4" />
+    <rect x="220" y="430" width="24" height="24" rx="4" />
+    <rect x="470" y="320" width="24" height="24" rx="4" />
+    <rect x="520" y="320" width="24" height="24" rx="4" />
+    <rect x="470" y="380" width="24" height="24" rx="4" />
+    <rect x="520" y="380" width="24" height="24" rx="4" />
+    <rect x="740" y="430" width="24" height="24" rx="4" />
+    <rect x="790" y="430" width="24" height="24" rx="4" />
+    <rect x="1060" y="350" width="24" height="24" rx="4" />
+    <rect x="1310" y="420" width="24" height="24" rx="4" />
+  </g>
+
+  <path d="M0 2000L560 780H1040L1600 2000H0Z" fill="url(#road)" />
+  <path d="M800 780L746 2000H854L800 780Z" fill="#FACC15" fill-opacity="0.75" />
+  <path d="M760 860L726 2000H774L808 860H760Z" fill="#FACC15" fill-opacity="0.38" />
+  <path d="M840 860L806 2000H854L888 860H840Z" fill="#FACC15" fill-opacity="0.38" />
+
+  <path d="M635 930C645 1130 678 1530 742 1940" stroke="url(#trailL)" stroke-width="26" stroke-linecap="round" />
+  <path d="M948 930C938 1130 905 1530 841 1940" stroke="url(#trailR)" stroke-width="26" stroke-linecap="round" />
+
+  <ellipse cx="800" cy="1980" rx="520" ry="36" fill="#0B1220" fill-opacity="0.9" />
+</svg>

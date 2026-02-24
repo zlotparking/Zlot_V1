@@ -1,0 +1,23 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ibg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#09182B" />
+      <stop offset="1" stop-color="#0E3A74" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#ibg)" />
+  <circle cx="190" cy="126" r="82" fill="#38BDF8" fill-opacity="0.22" />
+  <circle cx="1030" cy="626" r="122" fill="#1D4ED8" fill-opacity="0.2" />
+  <rect x="82" y="94" width="1036" height="572" rx="28" fill="#081B34" stroke="#334155" stroke-width="2" />
+  <rect x="130" y="142" width="940" height="476" rx="20" fill="#0F172A" />
+  <path d="M130 618L420 352H780L1070 618H130Z" fill="#071220" />
+  <line x1="184" y1="254" x2="1016" y2="254" stroke="#38BDF8" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="384" x2="1016" y2="384" stroke="#38BDF8" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="514" x2="1016" y2="514" stroke="#38BDF8" stroke-width="10" stroke-dasharray="28 20" />
+  <rect x="286" y="452" width="168" height="56" rx="12" fill="#0EA5E9" fill-opacity="0.88" />
+  <circle cx="322" cy="514" r="13" fill="#0F172A" />
+  <circle cx="418" cy="514" r="13" fill="#0F172A" />
+  <rect x="158" y="54" width="324" height="52" rx="12" fill="#0F172A" stroke="#334155" />
+  <text x="190" y="86" fill="#F8FAFC" font-size="22" font-family="Arial, sans-serif" font-weight="700">Indiranagar 100FT Road</text>
+  <text x="158" y="650" fill="#7DD3FC" font-size="18" font-family="Arial, sans-serif" font-weight="700">EAST BENGALURU · ZLOT NODE</text>
+</svg>

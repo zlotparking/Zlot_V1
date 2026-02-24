@@ -1,0 +1,23 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="kbg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#05202A" />
+      <stop offset="1" stop-color="#116A7B" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#kbg)" />
+  <circle cx="166" cy="124" r="82" fill="#22D3EE" fill-opacity="0.2" />
+  <circle cx="1040" cy="634" r="120" fill="#14B8A6" fill-opacity="0.18" />
+  <rect x="82" y="94" width="1036" height="572" rx="28" fill="#062634" stroke="#31566A" stroke-width="2" />
+  <rect x="130" y="142" width="940" height="476" rx="20" fill="#0B1A2B" />
+  <path d="M130 618L410 358H790L1070 618H130Z" fill="#061221" />
+  <line x1="184" y1="254" x2="1016" y2="254" stroke="#2DD4BF" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="384" x2="1016" y2="384" stroke="#2DD4BF" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="514" x2="1016" y2="514" stroke="#2DD4BF" stroke-width="10" stroke-dasharray="28 20" />
+  <rect x="300" y="452" width="168" height="56" rx="12" fill="#34D399" fill-opacity="0.85" />
+  <circle cx="336" cy="514" r="13" fill="#0F172A" />
+  <circle cx="432" cy="514" r="13" fill="#0F172A" />
+  <rect x="158" y="54" width="300" height="52" rx="12" fill="#0F172A" stroke="#31566A" />
+  <text x="190" y="86" fill="#F8FAFC" font-size="22" font-family="Arial, sans-serif" font-weight="700">Koramangala 4th Block</text>
+  <text x="158" y="650" fill="#67E8F9" font-size="18" font-family="Arial, sans-serif" font-weight="700">SOUTH-EAST BENGALURU · ZLOT NODE</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg width="1400" height="900" viewBox="0 0 1400 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gbg" x1="0" y1="0" x2="1400" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B132B" />
+      <stop offset="1" stop-color="#1E293B" />
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="900" fill="url(#gbg)" />
+  <path d="M0 900L420 430H980L1400 900H0Z" fill="#090F1D" />
+  <rect x="150" y="196" width="1100" height="520" rx="24" fill="#111827" stroke="#334155" stroke-width="2" />
+  <rect x="220" y="270" width="960" height="360" rx="18" fill="#0B1220" />
+  <line x1="280" y1="358" x2="1120" y2="358" stroke="#FACC15" stroke-width="10" stroke-dasharray="26 18" />
+  <line x1="280" y1="456" x2="1120" y2="456" stroke="#FACC15" stroke-width="10" stroke-dasharray="26 18" />
+  <line x1="280" y1="554" x2="1120" y2="554" stroke="#FACC15" stroke-width="10" stroke-dasharray="26 18" />
+  <rect x="760" y="500" width="210" height="74" rx="14" fill="#0EA5E9" />
+  <circle cx="804" cy="582" r="16" fill="#0F172A" />
+  <circle cx="926" cy="582" r="16" fill="#0F172A" />
+  <rect x="1046" y="272" width="30" height="188" rx="8" fill="#E2E8F0" />
+  <rect x="1036" y="292" width="140" height="18" rx="9" fill="#22C55E" />
+  <circle cx="1048" cy="301" r="9" fill="#111827" />
+  <rect x="236" y="90" width="374" height="70" rx="14" fill="#0F172A" stroke="#334155" />
+  <text x="272" y="136" fill="#FCD34D" font-size="30" font-family="Arial, sans-serif" font-weight="700">ZLOT GATE AUTOMATION</text>
+  <text x="240" y="748" fill="#E2E8F0" font-size="24" font-family="Arial, sans-serif" font-weight="700">Command queue triggers OPEN/CLOSE with timed session completion</text>
+</svg>

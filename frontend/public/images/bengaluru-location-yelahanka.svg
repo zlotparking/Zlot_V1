@@ -1,0 +1,23 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ybg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1025" />
+      <stop offset="1" stop-color="#1C2D55" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#ybg)" />
+  <circle cx="168" cy="126" r="86" fill="#F59E0B" fill-opacity="0.24" />
+  <circle cx="1038" cy="632" r="116" fill="#60A5FA" fill-opacity="0.16" />
+  <rect x="82" y="94" width="1036" height="572" rx="28" fill="#08122E" stroke="#334155" stroke-width="2" />
+  <rect x="130" y="142" width="940" height="476" rx="20" fill="#111827" />
+  <path d="M130 618L410 360H790L1070 618H130Z" fill="#060D1F" />
+  <line x1="184" y1="254" x2="1016" y2="254" stroke="#FACC15" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="384" x2="1016" y2="384" stroke="#FACC15" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="514" x2="1016" y2="514" stroke="#FACC15" stroke-width="10" stroke-dasharray="28 20" />
+  <rect x="250" y="450" width="168" height="56" rx="12" fill="#EC4899" fill-opacity="0.88" />
+  <circle cx="286" cy="512" r="13" fill="#0F172A" />
+  <circle cx="382" cy="512" r="13" fill="#0F172A" />
+  <rect x="158" y="54" width="308" height="52" rx="12" fill="#0F172A" stroke="#334155" />
+  <text x="190" y="86" fill="#F8FAFC" font-size="22" font-family="Arial, sans-serif" font-weight="700">Yelahanka Main Road</text>
+  <text x="158" y="650" fill="#FCD34D" font-size="18" font-family="Arial, sans-serif" font-weight="700">BENGALURU NORTH · ZLOT NODE</text>
+</svg>

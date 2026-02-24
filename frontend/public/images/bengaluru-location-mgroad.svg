@@ -1,0 +1,23 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mgbg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2B1B1B" />
+      <stop offset="1" stop-color="#8A3B12" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#mgbg)" />
+  <circle cx="176" cy="126" r="82" fill="#FB923C" fill-opacity="0.24" />
+  <circle cx="1038" cy="630" r="120" fill="#F97316" fill-opacity="0.2" />
+  <rect x="82" y="94" width="1036" height="572" rx="28" fill="#2A1A1A" stroke="#6B3C24" stroke-width="2" />
+  <rect x="130" y="142" width="940" height="476" rx="20" fill="#111827" />
+  <path d="M130 618L410 362H790L1070 618H130Z" fill="#0B1220" />
+  <line x1="184" y1="254" x2="1016" y2="254" stroke="#FB923C" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="384" x2="1016" y2="384" stroke="#FB923C" stroke-width="10" stroke-dasharray="28 20" />
+  <line x1="184" y1="514" x2="1016" y2="514" stroke="#FB923C" stroke-width="10" stroke-dasharray="28 20" />
+  <rect x="316" y="452" width="168" height="56" rx="12" fill="#F97316" fill-opacity="0.88" />
+  <circle cx="352" cy="514" r="13" fill="#0F172A" />
+  <circle cx="448" cy="514" r="13" fill="#0F172A" />
+  <rect x="158" y="54" width="258" height="52" rx="12" fill="#0F172A" stroke="#6B3C24" />
+  <text x="190" y="86" fill="#F8FAFC" font-size="22" font-family="Arial, sans-serif" font-weight="700">MG Road Metro</text>
+  <text x="158" y="650" fill="#FDBA74" font-size="18" font-family="Arial, sans-serif" font-weight="700">CENTRAL BENGALURU · ZLOT NODE</text>
+</svg>
