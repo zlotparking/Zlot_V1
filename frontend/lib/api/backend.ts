@@ -149,6 +149,20 @@ type AdminSessionsResponse = {
   sessions?: AdminSession[];
 };
 
+export type OwnerSubmissionPayload = {
+  owner_name: string;
+  phone: string;
+  email: string;
+  slot_name: string;
+  location: string;
+  price_per_hour: number;
+  maps_link?: string;
+  availability?: string;
+  notes?: string;
+  image_names: string[];
+  video_name?: string | null;
+};
+
 export function getApiBaseUrl(): string {
   return process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || DEFAULT_API_BASE_URL;
 }
@@ -374,6 +388,20 @@ export async function forceCloseAdminSession(authToken: string, sessionId: strin
   return requestJson<{ message?: string; session?: AdminSession }>(
     `/admin/sessions/${sessionId}/force-close`,
     { method: "POST" },
+    authToken
+  );
+}
+
+export async function submitOwnerSubmission(
+  authToken: string,
+  payload: OwnerSubmissionPayload
+) {
+  return requestJson<{ message?: string; email_id?: string | null; recipient?: string }>(
+    "/owner/submission",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    },
     authToken
   );
 }

@@ -8,6 +8,7 @@ import deviceRoutes from "./routes/device.js";
 import gateRoutes from "./routes/gate.js";
 import healthRoute from "./routes/health.js";
 import sessionRoutes from "./routes/session.js";
+import ownerRoutes from "./routes/owner.js";
 
 dotenv.config();
 
@@ -98,6 +99,7 @@ app.use("/device", deviceRoutes);
 app.use("/gate", gateRoutes);
 app.use("/session", sessionRoutes);
 app.use("/booking", bookingRoutes);
+app.use("/owner", ownerRoutes);
 
 app.use((error, _req, res, next) => {
   if (error instanceof Error && error.message === "CORS_NOT_ALLOWED") {

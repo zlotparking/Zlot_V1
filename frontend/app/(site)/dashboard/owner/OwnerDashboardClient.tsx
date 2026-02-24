@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { FileImage, Film, Send, UploadCloud } from "lucide-react";
 
+import { submitOwnerSubmission } from "@/lib/api/backend";
 import { getSupabaseBrowserClient, hasSupabaseEnv } from "@/lib/supabase/client";
 
 type SubmissionForm = {
@@ -73,6 +74,7 @@ export default function OwnerDashboardClient() {
   const [submissions, setSubmissions] = useState<OwnerSubmission[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -209,7 +211,7 @@ export default function OwnerDashboardClient() {
     setVideoFile(file);
   };
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     setMessage(null);
@@ -236,28 +238,74 @@ export default function OwnerDashboardClient() {
       return;
     }
 
-    const nextSubmission: OwnerSubmission = {
-      id: crypto.randomUUID(),
-      owner_name: ownerName,
-      phone,
-      email,
-      slot_name: slotName,
-      location,
-      price_per_hour: Math.round(price),
-      maps_link: form.maps_link.trim(),
-      availability: form.availability.trim(),
-      notes: form.notes.trim(),
-      image_names: imageFiles.map((file) => file.name),
-      video_name: videoFile?.name ?? null,
-      created_at: new Date().toISOString(),
-    };
+    if (!hasSupabaseEnv()) {
+      setError("Supabase environment is not configured.");
+      return;
+    }
 
-    setSubmissions((prev) => [nextSubmission, ...prev]);
-    setForm(EMPTY_FORM);
-    setImageFiles([]);
-    setVideoFile(null);
-    setUploadInputKey((prev) => prev + 1);
-    setMessage("Details submitted successfully. Team will review your submission.");
+    setSubmitting(true);
+
+    try {
+      const supabase = getSupabaseBrowserClient();
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+      const authToken = session?.access_token;
+
+      if (sessionError || !authToken) {
+        setError("Your login session expired. Please login again.");
+        return;
+      }
+
+      const imageNames = imageFiles.map((file) => file.name);
+      const videoName = videoFile?.name ?? null;
+
+      await submitOwnerSubmission(authToken, {
+        owner_name: ownerName,
+        phone,
+        email,
+        slot_name: slotName,
+        location,
+        price_per_hour: Math.round(price),
+        maps_link: form.maps_link.trim(),
+        availability: form.availability.trim(),
+        notes: form.notes.trim(),
+        image_names: imageNames,
+        video_name: videoName,
+      });
+
+      const nextSubmission: OwnerSubmission = {
+        id: crypto.randomUUID(),
+        owner_name: ownerName,
+        phone,
+        email,
+        slot_name: slotName,
+        location,
+        price_per_hour: Math.round(price),
+        maps_link: form.maps_link.trim(),
+        availability: form.availability.trim(),
+        notes: form.notes.trim(),
+        image_names: imageNames,
+        video_name: videoName,
+        created_at: new Date().toISOString(),
+      };
+
+      setSubmissions((prev) => [nextSubmission, ...prev]);
+      setForm(EMPTY_FORM);
+      setImageFiles([]);
+      setVideoFile(null);
+      setUploadInputKey((prev) => prev + 1);
+      setMessage("Details submitted and emailed to zlotparking@gmail.com.");
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Failed to submit details."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -494,9 +542,10 @@ export default function OwnerDashboardClient() {
 
         <button
           type="submit"
+          disabled={submitting}
           className="mt-5 inline-flex items-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
         >
-          Submit Details
+          {submitting ? "Submitting..." : "Submit Details"}
           <Send className="ml-2 h-4 w-4" />
         </button>
       </form>
