@@ -1,4 +1,8 @@
-const DEFAULT_API_BASE_URL = "http://localhost:5000";
+const LOCAL_API_BASE_URL = "http://localhost:5000";
+
+function normalizeBaseUrl(url: string): string {
+  return url.trim().replace(/\/+$/, "");
+}
 
 type BackendError = {
   error?: string;
@@ -182,7 +186,18 @@ export type OwnerSubmissionPayload = {
 };
 
 export function getApiBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || DEFAULT_API_BASE_URL;
+  const configured = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
+  if (configured) {
+    return normalizeBaseUrl(configured);
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    return LOCAL_API_BASE_URL;
+  }
+
+  throw new Error(
+    "Missing NEXT_PUBLIC_API_BASE_URL in production. Set it to your deployed backend URL."
+  );
 }
 
 async function parseErrorMessage(response: Response): Promise<string> {

@@ -1,4 +1,5 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
+import { getApiBaseUrl } from "@/lib/api/backend";
 import AuthGate from "./AuthGate";
 import DashboardClient from "./DashboardClient";
 
@@ -13,8 +14,15 @@ type BackendStatus = {
 };
 
 async function getBackendStatus(): Promise<BackendStatus> {
-  const apiBaseUrl =
-    process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || "http://localhost:5000";
+  let apiBaseUrl: string;
+  try {
+    apiBaseUrl = getApiBaseUrl();
+  } catch {
+    return {
+      status: "Offline",
+      hint: "Missing NEXT_PUBLIC_API_BASE_URL. Set it to your deployed backend URL.",
+    };
+  }
 
   try {
     const response = await fetch(`${apiBaseUrl}/`, { cache: "no-store" });
@@ -50,4 +58,3 @@ export default async function DashboardPage() {
     </div>
   );
 }
-

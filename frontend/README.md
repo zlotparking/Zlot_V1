@@ -17,6 +17,8 @@ Copy-Item .env.example .env.local
 2. Open `.env.local` and set:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SITE_URL` (your app URL in production)
+- `NEXT_PUBLIC_API_BASE_URL` (your backend URL in production)
 
 3. Restart your dev server after updating env vars.
 
